@@ -26,3 +26,319 @@
       margin-top: 0;
       margin-bottom: 1.5rem;
       color: #d1c4e9;
+    }
+    input, button {
+      padding: 0.7rem 1rem;
+      font-size: 1.1rem;
+      border-radius: 5px;
+      border: none;
+      margin: 0.5rem 0;
+      width: 80%;
+      max-width: 320px;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease;
+    }
+    input {
+      border: 2px solid #b39ddb;
+      background-color: #ede7f6;
+      color: #333;
+    }
+    input:focus {
+      outline: none;
+      border-color: #512da8;
+      background-color: #fff;
+    }
+    button {
+      background-color: #512da8;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover {
+      background-color: #311b92;
+    }
+    .result {
+      margin-top: 1.5rem;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 1rem;
+      border-radius: 8px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      user-select: text;
+      position: relative;
+    }
+    #copyBtn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #311b92;
+      border: none;
+      color: white;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      transition: opacity 0.3s ease;
+    }
+    #copyBtn:hover {
+      opacity: 1;
+    }
+    .error {
+      color: #ff6f61;
+      font-weight: 700;
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: #d1c4e9;
+    }
+  </style>
+</head>
+<body>
+  <h1>Timestamp Microservice</h1>
+  <p class="subtitle">Proyecto personalizado por <strong>[Tu Nombre]</strong></p>
+
+  <p>Ingresa una fecha (YYYY-MM-DD) o un timestamp (milisegundos):</p>
+  <input type="text" id="dateInput" placeholder="Ejemplo: 2015-12-25 o 1451001600000" aria-label="Campo para ingresar fecha o timestamp" />
+  <br />
+  <button id="submitBtn" aria-label="Botón para obtener timestamp">Obtener Timestamp</button>
+
+  <div class="result" id="result" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    const input = document.getElementById('dateInput');
+    const button = document.getElementById('submitBtn');
+    const resultDiv = document.getElementById('result');
+
+    function mostrarResultado(data) {
+      if (data.error) {
+        resultDiv.innerHTML = `<span class="error">Error: ${data.error}</span>`;
+      } else {
+        resultDiv.innerHTML = `
+{
+  "unix": ${data.unix},
+  "utc": "${data.utc}",
+  "iso": "${data.iso}"
+}
+        `;
+      }
+    }
+
+    button.addEventListener('click', () => {
+      let dateValue = input.value.trim();
+
+      let url = '/api';
+      if (dateValue) {
+        url += '/' + encodeURIComponent(dateValue);
+      }
+
+      resultDiv.textContent = 'Cargando...';
+
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          mostrarResultado(data);
+        })
+        .catch(() => {
+          resultDiv.innerHTML = '<span class="error">Error al conectar con el servidor.</span>';
+        });
+    });
+
+    // Función para copiar resultado al portapapeles
+    resultDiv.addEventListener('click', () => {
+      const text = resultDiv.textContent;
+      if (text && !text.toLowerCase().includes('error')) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert('Resultado copiado al portapapeles');
+        });
+      }
+    });
+  </script>
+
+  <footer>
+    Haz clic en el resultado para copiarlo. &nbsp;|&nbsp; Hecho con ❤️ por <strong>[Tu Nombre]</strong>
+  </footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
