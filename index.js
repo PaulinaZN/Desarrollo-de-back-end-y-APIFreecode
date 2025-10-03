@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// Servir archivos estáticos del frontend
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/:date?', (req, res) => {
@@ -12,12 +11,10 @@ app.get('/api/:date?', (req, res) => {
     const now = new Date();
     return res.json({
       unix: now.getTime(),
-      utc: now.toUTCString(),
-      iso: now.toISOString()
+      utc: now.toUTCString()
     });
   }
 
-  // Soportar timestamps numéricos
   if (/^\d+$/.test(dateString)) {
     dateString = parseInt(dateString);
   }
@@ -25,17 +22,18 @@ app.get('/api/:date?', (req, res) => {
   const date = new Date(dateString);
 
   if (date.toString() === "Invalid Date") {
-    return res.json({ error: "Fecha inválida. Por favor ingresa una fecha válida en formato YYYY-MM-DD o un timestamp en milisegundos." });
+    return res.json({ error: "Invalid Date" });
   }
 
   res.json({
     unix: date.getTime(),
-    utc: date.toUTCString(),
-    iso: date.toISOString()
+    utc: date.toUTCString()
   });
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor personalizado corriendo en puerto ${PORT}`);
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });
+
+ 
