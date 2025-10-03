@@ -3,29 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Timestamp Microservice - Proyecto de [Tu Nombre]</title>
+  <title>Timestamp Microservice - Proyecto Personalizado</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: Arial, sans-serif;
       max-width: 600px;
       margin: 3rem auto;
       padding: 1.5rem;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: #fff;
+      background: #282c34;
+      color: #61dafb;
       text-align: center;
       border-radius: 10px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     }
     h1 {
-      margin-bottom: 0.2rem;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-    }
-    p.subtitle {
-      font-style: italic;
-      margin-top: 0;
-      margin-bottom: 1.5rem;
-      color: #d1c4e9;
+      margin-bottom: 0.5rem;
     }
     input, button {
       padding: 0.7rem 1rem;
@@ -36,70 +27,49 @@
       width: 80%;
       max-width: 320px;
       box-sizing: border-box;
-      transition: background-color 0.3s ease;
     }
     input {
-      border: 2px solid #b39ddb;
-      background-color: #ede7f6;
-      color: #333;
+      border: 2px solid #61dafb;
+      background-color: #20232a;
+      color: #61dafb;
     }
     input:focus {
       outline: none;
-      border-color: #512da8;
-      background-color: #fff;
+      border-color: #21a1f1;
+      background-color: #282c34;
     }
     button {
-      background-color: #512da8;
+      background-color: #21a1f1;
       color: white;
       cursor: pointer;
       font-weight: 600;
     }
     button:hover {
-      background-color: #311b92;
+      background-color: #1b8cd8;
     }
     .result {
       margin-top: 1.5rem;
-      background: rgba(255, 255, 255, 0.15);
+      background: #20232a;
       padding: 1rem;
       border-radius: 8px;
       font-family: monospace;
       white-space: pre-wrap;
       word-wrap: break-word;
       user-select: text;
-      position: relative;
-    }
-    #copyBtn {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: #311b92;
-      border: none;
-      color: white;
-      padding: 0.3rem 0.6rem;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.9rem;
-      opacity: 0.8;
-      transition: opacity 0.3s ease;
-    }
-    #copyBtn:hover {
-      opacity: 1;
     }
     .error {
-      color: #ff6f61;
+      color: #ff6b6b;
       font-weight: 700;
     }
     footer {
       margin-top: 3rem;
       font-size: 0.9rem;
-      color: #d1c4e9;
+      color: #888;
     }
   </style>
 </head>
 <body>
   <h1>Timestamp Microservice</h1>
-  <p class="subtitle">Proyecto personalizado por <strong>[Tu Nombre]</strong></p>
-
   <p>Ingresa una fecha (YYYY-MM-DD) o un timestamp (milisegundos):</p>
   <input type="text" id="dateInput" placeholder="Ejemplo: 2015-12-25 o 1451001600000" aria-label="Campo para ingresar fecha o timestamp" />
   <br />
@@ -116,13 +86,7 @@
       if (data.error) {
         resultDiv.innerHTML = `<span class="error">Error: ${data.error}</span>`;
       } else {
-        resultDiv.innerHTML = `
-{
-  "unix": ${data.unix},
-  "utc": "${data.utc}",
-  "iso": "${data.iso}"
-}
-        `;
+        resultDiv.textContent = JSON.stringify(data, null, 2);
       }
     }
 
@@ -145,20 +109,11 @@
           resultDiv.innerHTML = '<span class="error">Error al conectar con el servidor.</span>';
         });
     });
-
-    // Función para copiar resultado al portapapeles
-    resultDiv.addEventListener('click', () => {
-      const text = resultDiv.textContent;
-      if (text && !text.toLowerCase().includes('error')) {
-        navigator.clipboard.writeText(text).then(() => {
-          alert('Resultado copiado al portapapeles');
-        });
-      }
-    });
   </script>
 </body>
 </html>
 
+ 
 
 
 
