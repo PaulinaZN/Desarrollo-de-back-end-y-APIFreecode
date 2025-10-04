@@ -1,15 +1,17 @@
-// {
-  "name": "timestamp-microservice-personalizado",
+{
+  "name": "timestamp-microservice",
   "version": "1.0.0",
-  "description": "Microservicio personalizado para convertir fechas y timestamps.",
+  "description": "freeCodeCamp Timestamp Microservice Project",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-  "author": "[Tu Nombre]",
-  "license": "MIT",
   "dependencies": {
     "express": "^4.18.2"
-  }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "author": "PaulinaZN",
+  "license": "MIT"
 }
-
