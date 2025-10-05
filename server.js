@@ -1,40 +1,52 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-// Middleware para archivos estáticos (opcional, para una página de ejemplo)
-app.use(express.static('public'));
+// Middleware
+app.use(express.json());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
-app.get('/api/:date?', (req, res) => {
-  let dateString = req.params.date;
+// Función principal
+const handleDate = (dateString) => {
   let date;
-
+  
   if (!dateString) {
-    // Expectativa 7-8: Hora actual si no hay parámetro
     date = new Date();
+  } else if (!isNaN(dateString) && /^\d+$/.test(dateString)) {
+    date = new Date(parseInt(dateString));
   } else {
-    // Intenta parsear como número Unix primero
-    const unixNum = Number(dateString);
-    if (!isNaN(unixNum)) {
-      date = new Date(unixNum);
-    } else {
-      // Si no, como string
-      date = new Date(dateString);
-    }
+    date = new Date(dateString);
   }
-
-  // Validación (Expectativa 5-6)
+  
   if (isNaN(date.getTime())) {
-    return res.json({ error: 'Invalid Date' });
+    return { error: "Invalid Date" };
   }
-
-  // Respuesta (Expectativas 2-4)
-  res.json({
+  
+  return {
     unix: date.getTime(),
     utc: date.toUTCString()
+  };
+};
+
+// Rutas
+app.get('/api/:date?', (req, res) => {
+  const result = handleDate(req.params.date);
+  res.json(result);
+});
+
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Timestamp Microservice',
+    example1: '/api/2015-12-25',
+    example2: '/api/1451001600000',
+    example3: '/api/'
   });
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
